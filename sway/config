@@ -1,0 +1,150 @@
+set $mod Mod4
+set $term ghostty
+
+#launch at startup 
+exec hyprpaper
+#cusrsor 
+exec gsettings set org.gnome.desktop.interface cursor-theme "Banana"
+seat * xcursor_theme Banana 32
+seat seat0 xcursor_theme Banana
+
+# Basic keybindings
+
+# Launch terminal
+bindsym $mod+Return exec $term
+
+#launch wofi 
+bindsym $mod+Space exec  fuzzel
+
+# Kill focused window
+bindsym $mod+q kill
+
+# Reload the config file
+bindsym $mod+Shift+c reload
+
+# Exit sway
+bindsym $mod+Shift+e exit
+
+# Switch between workspaces 1-10
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Layout toggles
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Move windows
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Floating toggle
+bindsym $mod+Shift+space floating toggle
+
+# Resize mode
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    # Exit resize mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bindsym --locked {
+  XF86MonBrightnessUp exec light -A 5
+  XF86MonBrightnessDown exec light -U 5
+
+  XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+  XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+  XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+  XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+  XF86AudioPlay exec playerctl play-pause
+  XF86AudioNext exec playerctl next
+  XF86AudioPrev exec playerctl previous
+
+  $mod+p exec playerctl play-pause
+  $mod+Period exec playerctl next
+  $mod+Comma exec playerctl previous
+}
+
+#apperance
+
+# title bar
+font pango: JetBrainsMono Nerd Font Mono Bold 10
+titlebar_padding 1
+titlebar_border_thickness 0
+
+# adjusting borders
+for_window [app_id="^.*"] border pixel 2
+default_border none
+default_floating_border none
+for_window [class=".*"] title_format "*%title"
+
+###############
+# FX settings
+###############
+
+corner_radius 10
+blur enable
+blur_xray disable
+
+set $opacity 0.8769
+for_window [class=".*"] opacity $opacity
+for_window [app_id=".*"] opacity $opacity
+
+###############
+# Gaps settings
+###############
+gaps inner 8
+gaps outer 10
+
+######################################
+# color settings fo windows         #
+######################################
+set $color1     #222222
+set $color2     #d8a657
+
+# Catppuccin Mocha colors for borders
+client.focused          #89b4fa #89b4fa #1e1e2e #89b4fa #89b4fa
+client.focused_inactive #585b70 #585b70 #1e1e2e #585b70 #585b70
+client.unfocused        #45475a #45475a #1e1e2e #45475a #45475a
+client.urgent           #f38ba8 #f38ba8 #1e1e2e #f38ba8 #f38ba8
+
