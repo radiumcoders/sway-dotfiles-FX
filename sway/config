@@ -2,19 +2,26 @@ set $mod Mod4
 set $term ghostty
 
 #launch at startup 
+exec waybar
 exec hyprpaper
 #cusrsor 
 exec gsettings set org.gnome.desktop.interface cursor-theme "Banana"
 seat * xcursor_theme Banana 32
 seat seat0 xcursor_theme Banana
 
+ exec swaymsg layer_effects "waybar" "blur enable"
+
 # Basic keybindings
+
+
+# Launch vscode
+bindsym $mod+c exec code --ozone-platform=wayland
 
 # Launch terminal
 bindsym $mod+Return exec $term
 
 #launch wofi 
-bindsym $mod+Space exec  fuzzel
+bindsym $mod+Space exec rofi -show drun 
 
 # Kill focused window
 bindsym $mod+q kill
@@ -122,11 +129,20 @@ for_window [class=".*"] title_format "*%title"
 # FX settings
 ###############
 
+layer_effects "waybar" {
+    blur enable;
+    blur_xray enable;
+    blur_ignore_transparent enable;
+    shadows enable;
+}
+
 corner_radius 10
 blur enable
 blur_xray disable
+shadows enable
+shadow_blur_radius 10
 
-set $opacity 0.8769
+set $opacity 0.7969
 for_window [class=".*"] opacity $opacity
 for_window [app_id=".*"] opacity $opacity
 
